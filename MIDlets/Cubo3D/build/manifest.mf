@@ -1,0 +1,11 @@
+MIDlet-6: MiEsfera, , cubo3d.MiEsfera
+MIDlet-2: MiPiramide, , cubo3d.MiPiramide
+MIDlet-3: MiCono, , cubo3d.MiCono
+MIDlet-4: MiCilindro, , cubo3d.MiCilindro
+MIDlet-5: MiPrisma, , cubo3d.MiPrisma
+MIDlet-1: HelloMIDlet, ,cubo3d.MiCubo
+MIDlet-Vendor: Vendor
+MIDlet-Version: 1.0
+MIDlet-Name: Cubo3D
+MicroEdition-Configuration: CLDC-1.1
+MicroEdition-Profile: MIDP-2.1

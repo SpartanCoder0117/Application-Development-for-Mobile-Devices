@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="?android:attr/selectableItemBackground"
+    tools:context=".MainActivity">
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/image_view"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:contentDescription="Una imagen"
+        android:src="@android:drawable/ic_menu_gallery"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_superior"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Texto largo"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+        <TextView
+            android:id="@+id/tv_inferior"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Texto inferior"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+    </LinearLayout>
+</LinearLayout>

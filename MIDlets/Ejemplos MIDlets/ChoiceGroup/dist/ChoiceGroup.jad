@@ -1,0 +1,8 @@
+MIDlet-1: HelloMIDlet, ,choicegroup.ChoiceGP
+MIDlet-Jar-Size: 2588
+MIDlet-Jar-URL: ChoiceGroup.jar
+MIDlet-Name: ChoiceGroup
+MIDlet-Vendor: Vendor
+MIDlet-Version: 1.0
+MicroEdition-Configuration: CLDC-1.1
+MicroEdition-Profile: MIDP-2.1

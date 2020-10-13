@@ -1,0 +1,8 @@
+MIDlet-1: HelloMIDlet, , holabn.HelloMIDlet
+MIDlet-Jar-Size: 2988
+MIDlet-Jar-URL: HolaBN.jar
+MIDlet-Name: HolaBN
+MIDlet-Vendor: Vendor
+MIDlet-Version: 1.0
+MicroEdition-Configuration: CLDC-1.1
+MicroEdition-Profile: MIDP-2.1

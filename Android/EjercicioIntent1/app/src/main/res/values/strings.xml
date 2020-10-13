@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">EjercicioIntent1</string>
+    <string name="nombre">Ingresa tu nombre:</string>
+    <string name="apellido">Ingresa tu apellido:</string>
+    <string name="enviar">Enviar</string>
+    <string name="segunda">Datos mostrados</string>
+</resources>

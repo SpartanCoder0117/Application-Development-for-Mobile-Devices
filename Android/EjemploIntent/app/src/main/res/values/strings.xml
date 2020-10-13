@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">EjemploIntent</string>
+    <string name="escribir">Ingresa una cadena</string>
+    <string name="aceptar">aceptar</string>
+</resources>

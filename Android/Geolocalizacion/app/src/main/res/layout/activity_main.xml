@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:padding="5dp">
+
+
+    <TextView
+        android:textSize="18dp"
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Posicion Actual:"
+        android:layout_margin="2dp"/>
+
+    <TextView
+        android:textSize="18dp"
+        android:id="@+id/latitud"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="Latitud: "
+        android:textColor="@android:color/white"
+        android:layout_margin="2dp"/>
+
+    <TextView
+        android:textSize="18dp"
+        android:id="@+id/longitud"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="Longitud:"
+        android:textColor="@android:color/white"
+        android:layout_margin="2dp"/>
+
+    <TextView
+        android:textSize="18dp"
+        android:id="@+id/precision"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="Precision:"
+        android:textColor="@android:color/white"
+        android:layout_margin="2dp"/>
+
+    <Button
+        android:id="@+id/activar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Activar" />
+
+    <Button
+        android:id="@+id/desactivar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Desactivar" />
+
+    <TextView
+        android:textSize="18dp"
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Posicion Actual:"
+        android:layout_margin="2dp"/>
+
+    <TextView
+        android:textSize="18dp"
+        android:id="@+id/provider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="Provider Status: "
+        android:textColor="@android:color/white"
+        android:layout_margin="2dp"/>
+</LinearLayout>

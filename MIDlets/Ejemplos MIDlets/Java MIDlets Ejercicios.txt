@@ -1,0 +1,841 @@
+MIDlets:
+1.	Probar en NetBeans todos los ejercicios.
+2.	Ejecutar todos los ejercicios en un dispositivo móvil.
+//**************************************************************
+
+EJEMPLO 1. Hola MIDlet con el API de alto nivel.
+import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;
+public class AltoNivelME extends MIDlet implements CommandListener {
+	private Display	d;
+	private Form	f;
+	private Command	c;
+	private Alert	a;
+	public AltoNivelME(  ) {
+		d = Display.getDisplay(this);
+		f = new Form ("Hola MIDlet");
+		f.append("Hola MIDlet!\n");
+		c = new Command("Salir", Command.EXIT, 3);
+		f.addCommand(c);
+		f.setCommandListener(this);
+	}
+ 	protected void startApp(  ) {
+		d.setCurrent(f);
+	}
+	protected void pauseApp(  ) {    }
+ 	protected void destroyApp(boolean b) {    }
+	public void commandAction(Command co, Displayable di) {
+		if (co == c) {
+			destroyApp(true);
+			notifyDestroyed();
+		} else d.setCurrent(new Alert("", "Otro comando...", null, AlertType.ERROR));	} 
+}
+//**************************************************************
+
+EJEMPLO 2. Hola MIDlet con el API de bajo nivel.
+import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;
+public class BajoNivelME extends MIDlet implements CommandListener {
+private Display		d;
+    private Command	c;
+    private Canvas	ca;
+    public Maravilloso() {
+        d  = Display.getDisplay(this);
+        ca = new Canvas() {
+            private int w;
+            private int h;
+            public void paint(Graphics g) {
+                w = getWidth();
+                h = getHeight();
+                g.setColor(0, 0, 0);
+                g.fillRect(0, 0, w, h);
+                g.setColor(255, 255, 255);
+                g.setStrokeStyle(Graphics.SOLID);
+                g.drawString("Hola MIDlet", w/2, h/2, (Graphics.BASELINE|Graphics.HCENTER));
+            }
+        };
+        c = new Command("Salir", Command.EXIT, 3);
+        ca.addCommand(c);
+        ca.setCommandListener(this);
+    }
+    protected void startApp() {
+        d.setCurrent(ca);
+    }
+    protected void pauseApp() {    }
+    protected void destroyApp(boolean b) {    }
+    public void commandAction(Command co, Displayable di) {
+        if (co == c) {
+            destroyApp(true);
+            notifyDestroyed();
+        } else d.setCurrent(new Alert("", "Otro comando...", null, AlertType.ERROR));
+    }
+}
+//**************************************************************
+
+EJEMPLO 3. Ejemplo de Form y Command.
+import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;
+public class FormCommandME extends MIDlet implements CommandListener {
+    private Display	d;
+    private Form	f;
+    private Command	c; 
+    public FormCommandME(  ) {
+        d = Display.getDisplay(this);
+        f = new Form ("Form y Command");
+        f.append("Hola MIDlet\n");
+        c = new Command("Salir", Command.EXIT, 3);
+        f.addCommand(c);
+        f.setCommandListener(this);
+    }
+    protected void startApp(  ) {
+        d.setCurrent(f);
+    }
+    protected void pauseApp(  ) {    }
+    protected void destroyApp(boolean b) {    }
+    public void commandAction(Command co, Displayable di) {
+        if (co == c) {
+            destroyApp(true);
+            notifyDestroyed();
+        } else d.setCurrent(new Alert("", "Otro comando...", null, AlertType.ERROR));
+    } 
+}
+//**************************************************************
+
+EJEMPLO 4. Ejemplo de StringItem.
+import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;
+public class StringItemME extends MIDlet implements CommandListener {
+private Display	d;
+	private Form	f;
+	private Alert	a;
+	private Command	cs;
+	private Command	cc;
+	private StringItem si;
+	private int	n;
+	public StringItemME( ) {
+		n  = 0;
+		d  = Display.getDisplay(this);
+		f  = new Form ("StringItem");
+		f.append("Ejemplo de StringItem\n");
+		si = new StringItem("Cadena: ", "Contador = " + n);
+		f.append(si);
+		cs = new Command("Salir", Command.EXIT, 3);
+		cc = new Command("Contar", Command.SCREEN, 1);
+		f.addCommand(cs);
+		f.addCommand(cc);
+		f.setCommandListener(this);
+	}
+	protected void startApp(  ) {
+		d.setCurrent(new Alert("", "MIDlet activo...", null, AlertType.ERROR));
+		d.setCurrent(f);
+	}
+	protected void pauseApp(  ) {
+		d.setCurrent(new Alert("", "MIDlet pausado...", null, AlertType.ERROR));
+	}
+	protected void destroyApp(boolean b) {
+		d.setCurrent(new Alert("", "MIDlet terminado.", null, AlertType.ERROR));
+	}
+	public void commandAction(Command co, Displayable di) {
+		if (co == cs) {
+			destroyApp(true);
+			notifyDestroyed();
+		} else if (co == cc) {
+			n++;
+			si.setText("Contador = " + n);
+		} else d.setCurrent(new Alert("", "MIDlet activo...", null, AlertType.ERROR));
+	}
+}
+//**************************************************************
+
+EJEMPLO 5. La imagen java.png se coloca en el directorio res en la carpeta de aplicaciones del dispositivo.
+Para probar las imágenes, crear una nueva carpeta llamada resources en miproyecto/Source Packages/resources, y allí guardar las imágenes:
+import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;
+public class Maravilloso extends MIDlet implements CommandListener {
+    private Display	d;
+    private Form	f;
+    private Image	i;
+    private ImageItem	ii;
+    private Command	c; 
+    public Maravilloso(  ) {
+        d = Display.getDisplay(this);
+	f = new Form ("ImageItem");
+	try {
+            ii = new ImageItem("", Image.createImage("resources/java.png"), ImageItem.LAYOUT_CENTER, "Logo de Java");
+            f.append(ii);
+	} catch (java.io.IOException e) {
+            f.append(" Error al leer el archivo java.png: " + e); 
+	}
+	c = new Command("Salir", Command.EXIT, 3);
+	f.addCommand(c);
+	f.setCommandListener(this);
+    }
+    protected void startApp(  ) {
+        d.setCurrent(f);
+    }
+    protected void pauseApp(  ) {    }
+    protected void destroyApp(boolean b) {    }
+    public void commandAction(Command co, Displayable di) {
+        if (co == c) {
+            destroyApp(true);
+            notifyDestroyed();
+	} else d.setCurrent(new Alert("", "Otro comando...", null, AlertType.ERROR));
+    } 
+}
+//**************************************************************
+
+EJEMPLO 6. Ejemplo de DateField y TextField.
+import java.util.Date;
+import java.util.Calendar;
+import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;
+public class DateTextFieldME extends MIDlet implements CommandListener {
+	private Display	d;
+	private Form	f;
+	private TextField tf;
+	private DateField df; 
+	private StringItem si; 
+	private Command	cc; 
+	private Command	cs;
+	public DateTextFieldME (  ) {
+		d  = Display.getDisplay(this);
+		tf = new TextField("Nombre:","", 10, TextField.ANY);
+		df = new DateField("Cumpleaños:", DateField.DATE);
+		si = new StringItem("", "");
+		f  = new Form ("TextField y DateField");
+		f.append(tf); 
+		f.append(df);
+		f.append(si);
+		cc = new Command("Continuar", Command.OK, 0);
+		cs = new Command("Salir", Command.EXIT, 3);
+		f.addCommand(cc);
+		f.addCommand(cs);
+		f.setCommandListener(this);
+	}
+	protected void startApp(  ) {
+		d.setCurrent(f);
+	}
+	protected void pauseApp(  ) {    }
+	protected void destroyApp(boolean b) {    }
+	public void commandAction(Command co, Displayable di) {
+		if (co == cs) {
+			destroyApp(true);
+			notifyDestroyed();
+		} else if (co == cc) {
+			Calendar c1 = Calendar.getInstance();
+			Calendar c2 = Calendar.getInstance();
+			Date date = df.getDate();
+			if ((date == null) || (tf.getString().equals(""))) {
+				si.setText("Favor de ingresar su nombre…");
+				return;
+			}
+			c2.setTime(date);
+			int edad = c1.get(Calendar.YEAR)-c2.get(Calendar.YEAR);
+			f.delete(0);
+			f.delete(0);
+			f.removeCommand(cc);
+			si.setText("Hola " + tf.getString() + "\nTu edad es = " + edad + " años");
+		} else d.setCurrent(new Alert("", "Otro comando...", null, AlertType.ERROR));
+	} 
+}
+//**************************************************************
+
+EJEMPLO 7. Ejemplo de ChoiceGroup.
+import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;
+public class ChoiceGroupME extends MIDlet implements CommandListener {
+	private Display		d;
+	private Form		f;
+	private TextField	tf;
+	private ChoiceGroup	cg; 
+	private ChoiceGroup	ch; 
+	private Command		cs; 
+	public ChoiceGroupME(  ) {
+		d  = Display.getDisplay(this);
+		tf = new TextField("Nombre:", "", 10, TextField.ANY);
+		cg = new ChoiceGroup("Sexo:", ChoiceGroup.EXCLUSIVE);
+		cg.append("Masculino", null);
+		cg.append("Femenino", null);
+		ch = new ChoiceGroup("Lenguajes:", ChoiceGroup.MULTIPLE);
+		ch.append("Java", null);
+		ch.append("C++", null);
+		ch.append("Prolog", null);
+		ch.append("Otros", null);
+		f  = new Form ("ChoiceGroup");
+		f.append(tf); 
+		f.append(cg);
+		f.append(ch);
+		cs = new Command("Salir", Command.EXIT, 3);
+		f.addCommand(cs);
+		f.setCommandListener(this);
+	}
+	protected void startApp(  ) {
+		d.setCurrent(f);
+	}
+	protected void pauseApp(  ) {    }
+	protected void destroyApp(boolean b) {    }
+	public void commandAction(Command co, Displayable di) {
+		if (co == cs) {
+			destroyApp(true);
+			notifyDestroyed();
+		} else d.setCurrent(new Alert("", "Otro comando...", null, AlertType.ERROR));
+	} 
+}
+//**************************************************************
+
+EJEMPLO 8. Ejemplo de Gauge.
+import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;
+public class GaugeME extends MIDlet implements CommandListener {
+	private Display d;
+	private Form    f;
+	private Gauge   g;
+	private Command c; 
+	public GaugeME(  ) {
+		d = Display.getDisplay(this);
+		g = new Gauge("Amplitud", true, 10, 5);
+		f = new Form ("Gauge");
+		f.append(g); 
+		c = new Command("Salir", Command.EXIT, 3);
+		f.addCommand(c);
+		f.setCommandListener(this);
+	}
+	protected void startApp(  ) {
+		d.setCurrent(f);
+	}
+	protected void pauseApp(  ) {    }
+	protected void destroyApp(boolean b) {    }
+	public void commandAction(Command co, Displayable di) {
+		if (co == c) {
+			destroyApp(true);
+			notifyDestroyed();
+		} else d.setCurrent(new Alert("", "Otro comando...", null, AlertType.ERROR));
+	} 
+}
+//**************************************************************
+
+EJEMPLO 9. Ejemplo de Alert.
+import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;
+public class AlertME extends MIDlet implements CommandListener, ItemStateListener  {
+	private Display		d;
+	private Alert		a;
+	private Form		f;
+	private TextField	tt;
+	private TextField	tx; 
+	private ChoiceGroup	ct;
+	private ChoiceGroup	cg;
+	private Gauge		g;
+	private Command		cc; 
+	private Command		cs; 
+	private int		s=2;
+	public AlertME(  ) {
+		d  = Display.getDisplay(this);
+		tt = new TextField("Titulo:", "Un título", 10, TextField.ANY);
+		tx = new TextField("", "...texto del Alert...", 50, TextField.ANY);
+		ct =new ChoiceGroup("Seleccionar tipo:", ChoiceGroup.EXCLUSIVE);
+		ct.append("ALARM", null);
+		ct.append("CONFIRMATION", null);
+		ct.append("ERROR", null);
+		ct.append("INFO", null);
+		ct.append("WARNING", null);
+		ct.setSelectedIndex(0, true);
+		cg=new ChoiceGroup("Tiempo:", ChoiceGroup.EXCLUSIVE);
+		cg.append("Forever", null);
+		cg.append("Temporal", null);
+		cg.setSelectedIndex(0, true);
+		g = new Gauge("Gauge (min=0 max=20)", true, 20, s);
+		f = new Form ("Ejemplo Alert");
+		f.append(tt); 
+		f.append(tx);
+		f.append(ct);
+		f.append(cg);
+		f.append(g);
+		cc=new Command("Continuar", Command.OK, 0);
+		cs=new Command("Salir", Command.EXIT, 3);
+		f.addCommand(cc);
+		f.addCommand(cs);
+		f.setCommandListener(this);
+		f.setItemStateListener(this);
+	}
+	protected void startApp(  ) {
+		d.setCurrent(new Alert("", "En estado Activo", null, AlertType.ERROR));
+		d.setCurrent(f);
+	}
+	protected void pauseApp(  ) {
+            d.setCurrent(new Alert("", "En estado pausado...", null, AlertType.ERROR));
+	}
+	protected void destroyApp(boolean b) {
+            d.setCurrent(new Alert("", "En estado terminado.", null, AlertType.ERROR));
+	}
+	public void commandAction(Command co, Displayable di) {
+		if (co == cs) {
+			destroyApp(true);
+			notifyDestroyed();
+		} else if (co == cc) {
+			switch (ct.getSelectedIndex()) {
+				case 0: a = new Alert(tt.getString(), tx.getString(), null, AlertType.ALARM); break;
+				case 1: a = new Alert(tt.getString(), tx.getString(), null, AlertType.CONFIRMATION); break;
+				case 2: a = new Alert(tt.getString(), tx.getString(), null, AlertType.ERROR); break;
+				case 3: a = new Alert(tt.getString(), tx.getString(), null, AlertType.INFO); break;
+				case 4: a = new Alert(tt.getString(), tx.getString(), null, AlertType.WARNING); break;
+				default:a = new Alert(tt.getString(), tx.getString(), null, AlertType.INFO);
+			}
+			if ((cg.getSelectedIndex() == 0) || (g.getValue()==0) )
+				a.setTimeout(Alert.FOREVER);
+			else
+				a.setTimeout(g.getValue()*1000);
+			d.setCurrent(a);
+		} else d.setCurrent(new Alert("", "Otro comando digitado...", null, AlertType.ERROR));
+	}
+	public void itemStateChanged(Item item) {
+		if (item == cg) {
+			if (cg.getSelectedIndex() == 0) {
+				s=g.getValue();
+				g.setValue(0);
+			} else 
+				g.setValue(s);
+		} else if (item == g) {
+			if (g.getValue() == 0) 
+				cg.setSelectedIndex(0,true);
+			else 
+				cg.setSelectedIndex(1,true);
+		} else d.setCurrent(new Alert("", "Otro item seleccionado...", null, AlertType.ERROR));
+	}
+}
+//**************************************************************
+
+EJEMPLO 10. Ejemplo de List.
+import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;
+public class Maravilloso extends MIDlet implements CommandListener {
+	public static final int CONECTAR = 0;
+	public static final int ESTADO = 1;
+	public static final int INSERTAR = 2;
+	public static final int DESCONECTAR = 3;
+	public static final int MENU = 4;
+	private Display     d;
+	private List        l;
+	private TextBox     tb;
+	private Form        f;
+	private TextField   ts;
+	private TextField   tf;
+	private ChoiceGroup cr;
+	private Command     cs; 
+	private Command     cc; 
+	private int         n;
+	public Maravilloso(  ) {
+		n  = MENU;
+		d  = Display.getDisplay(this);
+		ts = new TextField("Servidor:", "", 10, TextField.URL);
+		tb = new TextBox("Estado", "Sin Conexion", 400, TextField.ANY);
+		tf = new TextField("Area ID", "0", 10, TextField.NUMERIC);
+		cr= new ChoiceGroup("Riesgo:", ChoiceGroup.EXCLUSIVE);
+		cr.append("Bajo", null);
+		cr.append("Normal", null);
+		cr.append("Alto", null);
+		l  = new List ("Seleccionar opción:", List.EXCLUSIVE);
+		l.append("Conectar", null); 
+		l.append("Solicitar Datos", null); 
+		l.append("Ingresar Datos", null); 
+		l.append("Desconectar", null); 
+		f  = new Form ("Menu Conectar");
+		cs = new Command("Salir", Command.EXIT, 3);
+		cc = new Command("Continuar", Command.OK, 1);
+		l.addCommand(cc);
+		l.addCommand(cs);
+		l.setCommandListener(this);
+		f.addCommand(cc);
+		f.addCommand(cs);
+		f.setCommandListener(this);
+		tb.addCommand(cs);
+		tb.setCommandListener(this);
+	}
+	protected void startApp(  ) {
+		d.setCurrent(l);
+	}
+	protected void pauseApp(  ) {    }
+	protected void destroyApp(boolean b) {    }
+	public void commandAction(Command co, Displayable di) {
+		if (n == MENU ) {
+			if (co == cs) {
+				destroyApp(true);
+				notifyDestroyed();
+			} else if (co == cc) {
+				switch ( l.getSelectedIndex() ){
+					case CONECTAR:      conectar(); break;
+					case ESTADO:        listar();break;
+					case INSERTAR:      insertar();break;
+					case DESCONECTAR:   desconectar();break;
+				}
+			} d.setCurrent(new Alert("", "Otro comando digitado...", null, AlertType.ERROR));
+		} else {
+			if (co == cs) {
+				muestraMenu();
+			} else if (co ==cc) {
+				switch ( n ){
+					case CONECTAR:	listar();break;
+					case ESTADO:	muestraMenu();break;
+					case INSERTAR:	listar();break;
+					case DESCONECTAR: muestraMenu();break;
+				}
+			} d.setCurrent(new Alert("", "Otro comando digitado...", null, AlertType.ERROR));
+		}
+	 }
+	public void conectar(){
+		n = CONECTAR; 
+		f.setTitle("Menu Conectar");
+		while (f.size()>0) f.delete(0);
+		f.append(ts);
+		d.setCurrent(f);
+	}
+	public void insertar(){
+		n = INSERTAR;
+		f.setTitle("Menu Insertar");
+		while (f.size()>0) f.delete(0);
+		f.append(tf);
+		f.append(cr);
+		d.setCurrent(f);
+	}
+	public void desconectar(){
+		d.setCurrent(new Alert("Desconectar","No está conectado a un servidor.", null, AlertType.ERROR));
+		n = DESCONECTAR;
+		n = MENU;
+	}
+	public void listar(){
+		n = ESTADO;
+		d.setCurrent(tb);
+	}
+	public void muestraMenu(){
+		n = MENU;
+		d.setCurrent(l);
+	}
+}
+//**************************************************************
+
+EJEMPLO 11. Ejemplo de Canvas.
+import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;
+public class CanvasME extends MIDlet implements CommandListener {
+	private Display	d;
+	private Command	cs; 
+	private Canvas	ca; 
+	public CanvasME(  ) {
+		d  = Display.getDisplay(this);
+		ca = new Canvas() {
+			private int w;
+			private int h;
+			public void paint (Graphics g){
+				w = getWidth();
+				h = getHeight();
+				g.setColor(255, 0, 0); g.fillRect(0, 0, w, h);
+				g.setColor(0, 0, 0); g.drawLine(0, 0, 50, 50);
+			}
+		};
+		cs = new Command("Salir", Command.EXIT, 3);
+		ca.addCommand(cs);
+		ca.setCommandListener(this);
+	}
+	protected void startApp(  ) {
+		d.setCurrent(ca);
+	}
+	protected void pauseApp(  ) {    }
+	protected void destroyApp(boolean b) {    }
+	public void commandAction(Command co, Displayable di) {
+		if (co == cs) {
+			destroyApp(true);
+			notifyDestroyed();
+		} else d.setCurrent(new Alert("", "Otro comando digitado...", null, AlertType.ERROR));
+	} 
+}
+//**************************************************************
+
+EJEMPLO 12. Ejemplo de primitivas gráficas.
+import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;
+public class Maravilloso extends MIDlet implements CommandListener {
+	private Display	d;
+	private Command	cs;
+	private Canvas	ca;
+	public Maravilloso(  ) {
+		d  = Display.getDisplay(this);
+		ca = new Canvas() {
+			private int w;
+			private int h;
+			public void paint (Graphics g){
+				w=getWidth();
+				h=getHeight();
+				g.setColor(0, 0, 0);
+				g.fillRect(0, 0, w, h);
+				g.setColor(255, 255, 255);
+				g.setStrokeStyle(Graphics.SOLID);
+				g.drawLine(0, h/2, w-1, h/2);
+				g.setColor(0, 255, 0);
+				g.setStrokeStyle(Graphics.DOTTED);
+				g.drawLine(0, 0, w-1, h-1);
+				g.setColor(255, 0, 0);
+				g.setStrokeStyle(Graphics.DOTTED);
+				g.drawRect(w/4, 0, w/2, h/4);
+				g.setColor(0, 0, 255);
+				g.setStrokeStyle(Graphics.SOLID);
+				g.drawRoundRect(w/4 + 4, 4, w/2 -8, h/4 -8, 8,8);
+			}
+		};
+		cs=new Command("Salir",Command.EXIT, 3);
+		ca.addCommand(cs);
+		ca.setCommandListener(this);
+	}
+	protected void startApp(  ) {
+		d.setCurrent(ca);
+	}
+	protected void pauseApp(  ) {    }
+	protected void destroyApp(boolean b) {    }
+	public void commandAction(Command co, Displayable di) {
+		if (co ==cs) {
+			destroyApp(true);
+			notifyDestroyed();
+		} else d.setCurrent(new Alert("", "Otro comando digitado...", null, AlertType.ERROR));
+	}
+}
+//**************************************************************
+
+EJEMPLO 13. Ejemplo de Arcos.
+import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;
+public class ArcoME extends MIDlet implements CommandListener {
+	private Display d;
+	private Command cs; 
+	private Canvas  ca; 
+	public ArcoME(  ) {
+		d  = Display.getDisplay(this);
+		ca = new Canvas() {
+			private int w;
+			private int h;
+			public void paint (Graphics g){
+				w = getWidth();
+				h = getHeight();
+				g.setColor(0, 0, 0);
+				g.fillRect(0, 0, w, h);
+				g.setColor(255, 255, 255);
+                                g.setStrokeStyle(Graphics.SOLID);
+				g.fillArc(0, 0, h-100, w-100, 0, 360);
+				g.setColor(255, 0, 0);
+				g.drawArc(60, 20, 97, 97, -90, 180);
+				g.setColor(0, 255, 0);
+				g.drawArc(60, 20, 97, 97, 90, 180);
+                                g.drawString("w:"+w+" h:"+h, 50, 50, 0);
+                        }
+		};
+		cs = new Command("Salir",Command.EXIT, 3);
+		ca.addCommand(cs);
+		ca.setCommandListener(this);
+	}
+	protected void startApp(  ) {
+		d.setCurrent(ca);
+	}
+	protected void pauseApp(  ) {    }
+	protected void destroyApp(boolean b) {    }
+	public void commandAction(Command co, Displayable di) {
+		if (co == cs) {
+			destroyApp(true);
+			notifyDestroyed();
+		} else d.setCurrent(new Alert("", "Otro comando digitado...", null, AlertType.ERROR));
+	} 
+}
+//**************************************************************
+
+EJEMPLO 14. Ejemplo de textos.
+import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;
+public class Maravilloso extends MIDlet implements CommandListener {
+	private Display d;
+	private Command cs; 
+	private Canvas  ca; 
+	public Maravilloso(  ) {
+		d  = Display.getDisplay(this);
+		ca = new Canvas() {
+			private int w, h;
+			public void paint (Graphics g){
+				w = getWidth();
+				h = getHeight();
+				g.setColor(0, 0, 0);
+				g.fillRect(0, 0, w, h);
+				g.setColor(255, 255, 255);
+				g.setStrokeStyle(Graphics.SOLID);
+				g.drawString("...Una carta...", w/2, h/2, (Graphics.BASELINE| Graphics.HCENTER));
+			}
+		};
+		cs = new Command("Salir", Command.EXIT, 3);
+		ca.addCommand(cs);
+		ca.setCommandListener(this);
+	}
+	protected void startApp(  ) {
+		d.setCurrent(ca);
+	}
+	protected void pauseApp(  ) {    }
+	protected void destroyApp(boolean b) {    }
+	public void commandAction(Command co, Displayable di) {
+		if (co == cs) {
+			destroyApp(true);
+			notifyDestroyed();
+		} else d.setCurrent(new Alert("", "Otro comando digitado...", null, AlertType.ERROR));
+	} 
+}
+//**************************************************************
+
+EJEMPLO 15. Ejemplo de mostrar una imagen en un Canvas.
+import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;
+public class Maravilloso extends MIDlet implements CommandListener {
+	private Display d;
+	private Command c; 
+	private Canvas  ca; 
+	public Maravilloso ( ) {
+		d  = Display.getDisplay(this);
+		ca = new Canvas() {
+			private int w, h;
+			public void paint (Graphics g){
+				w = getWidth();
+				h = getHeight();
+				g.setColor(0, 0, 0);
+				g.fillRect(0, 0, w, h);
+				try {
+					Image i= Image.createImage("/java.png");
+					g.drawImage(i, w/2, h/2,(Graphics.VCENTER| Graphics.HCENTER));		      
+				} catch (java.io.IOException e) {
+					g.setColor(255, 255, 255);
+					g.setStrokeStyle(Graphics.SOLID);
+					g.drawString("Error al leer java.png", 0, h/2, (Graphics.BASELINE|Graphics.LEFT));
+				}
+			}
+		};
+		c = new Command("Salir", Command.EXIT, 3);
+		ca.addCommand(c);
+		ca.setCommandListener(this);
+	}
+	protected void startApp(  ) {
+		d.setCurrent(ca);
+	}
+	protected void pauseApp(  ) {    }
+	protected void destroyApp(boolean b) {    }
+	public void commandAction(Command co, Displayable di) {
+		if (co == c) {
+			destroyApp(true);
+			notifyDestroyed();
+		} else d.setCurrent(new Alert("", "Otro comando digitado...", null, AlertType.ERROR));
+	} 
+}
+//**************************************************************
+
+EJEMPLO 16. Ejemplo para mover un cuadro.
+import javax.microedition.midlet.*;
+import javax.microedition.lcdui.*;
+public class MueveTeclaME extends MIDlet implements CommandListener {
+	private Display d;
+	private Command cs; 
+	private Canvas ca; 
+	public MueveTeclaME(  ) {
+		d = Display.getDisplay(this);
+		ca = new Canvas() {
+			private int x=0, y=0;
+			public void paint (Graphics g){
+				g.setColor(255, 255, 255);
+				g.fillRect(0, 0, getWidth(), getHeight());
+				g.setColor(255, 0, 0);
+				g.setStrokeStyle(Graphics.SOLID);
+                                g.fillArc(x, y, 50, 50, 0, 360);
+                                g.drawString("x="+x+", y="+y, getWidth()/2, getHeight()/2, 0);
+			}
+			protected void keyPressed(int k) {
+				int up = getKeyCode(UP);
+				int dn = getKeyCode(DOWN);
+				int lf = getKeyCode(LEFT);
+				int rt = getKeyCode(RIGHT);
+				if (k == up)      { if(y>0) y-=1; repaint(); }
+				else if (k == dn) { if(y<getWidth()) y+=1; repaint(); }
+				else if (k == lf) { if(x>0) x-=1; repaint(); }
+				else if (k == rt) { if(x<getHeight()) x+=1; repaint(); }
+			}
+		};
+		cs = new Command("Salir",Command.EXIT, 3);
+		ca.addCommand(cs);
+		ca.setCommandListener(this);
+	}
+	protected void startApp(  ) {
+		d.setCurrent(ca);
+	}
+	protected void pauseApp(  ) {    }
+	protected void destroyApp(boolean b) {    }
+	public void commandAction(Command co, Displayable di) {
+		if (co == cs) {
+			destroyApp(true);
+			notifyDestroyed();
+		} else d.setCurrent(new Alert("", "Otro comando digitado...", null, AlertType.ERROR));
+	} 
+}
+//**************************************************************
+
+EJEMPLO 17. Una animación de una pelota con un objeto fillArc().
+import javax.microedition.lcdui.*;
+import javax.microedition.midlet.*;
+import javax.microedition.lcdui.game.GameCanvas;
+public class Rebota extends MIDlet {
+	Display d;
+	Pantalla p;
+	public Rebota() {
+		d = Display.getDisplay(this);
+		p = new Pantalla();
+	}
+	protected void destroyApp(boolean b) throws MIDletStateChangeException{ }
+	protected void pauseApp() { }
+	protected void startApp() throws MIDletStateChangeException {
+		d.setCurrent(p);
+	}
+}
+class Pantalla extends GameCanvas implements Runnable{
+	int x = 0, y = 0;
+	int velx = 6, vely = 4;
+	public Pantalla(){
+		super(true);
+		Thread t=new Thread(this);
+		t.start();
+	}
+	public void paint(Graphics g) {
+		g.setColor(255, 255, 210);
+		g.fillRect(0, 0, getWidth(), getHeight());
+		g.setColor(0, 255, 2);
+		g.fillArc(x, y, 30, 30, 0, 360);
+	}
+	public void run() {
+		while(true){
+			x = x + velx;
+			y = y + vely;
+			repaint();
+			if( x+30 > getWidth()  || x < 0 ) velx = -velx;
+			if( y+30 > getHeight() || y < 0 ) vely = -vely;
+			try {
+				Thread.sleep(50);
+				flushGraphics();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}
+//**************************************************************
+
+EJEMPLO 18. Cargar música midi.
+Investigar, el uso de MMAPI (Mobile Media API):
+import java.io.*;
+import javax.microedition.media.*;
+	:
+	:
+	try {
+		InputStream ins = getClass().getResourceStream("jazz.mid");
+		Player p = Manager.createPlayer(ins,"audio/midi");
+		p.setLoopCount(5);
+		p.start();
+	} catch (Exception e) { ... }
+	:
+	:
+

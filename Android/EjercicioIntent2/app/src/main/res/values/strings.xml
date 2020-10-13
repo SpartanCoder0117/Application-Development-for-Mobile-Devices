@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">EjercicioIntent2</string>
+    <string name="ingresa_a">Ingresa A:</string>
+    <string name="aceptar">Calcular</string>
+    <string name="ingresa_b">Ingresa B:</string>
+    <string name="ingresa_c">Ingresa C:</string>
+    <string name="resultado">Raices</string>
+</resources>

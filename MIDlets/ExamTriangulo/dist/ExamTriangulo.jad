@@ -1,0 +1,8 @@
+MIDlet-1: MiTriangulo, , examtriangulo.MiTriangulo
+MIDlet-Jar-Size: 3970
+MIDlet-Jar-URL: ExamTriangulo.jar
+MIDlet-Name: ExamTriangulo
+MIDlet-Vendor: Vendor
+MIDlet-Version: 1.0
+MicroEdition-Configuration: CLDC-1.1
+MicroEdition-Profile: MIDP-2.1
